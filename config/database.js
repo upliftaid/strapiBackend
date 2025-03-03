@@ -1,27 +1,22 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'postgres'); // Set to 'postgres'
+  const client = env("DATABASE_CLIENT", "postgres"); // Ensure it's set to PostgreSQL
 
   const connections = {
     postgres: {
       connection: {
-         connectionString: env('DATABASE_URL'), // Optional, use if you have a complete connection string
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapi_db'), // Change to your PostgreSQL database name
-        user: env('DATABASE_USERNAME', 'postgres'), // Change to your PostgreSQL username
-        password: env('DATABASE_PASSWORD', 'Kunwar@123'), // Change to your PostgreSQL password
-        ssl: env.bool('DATABASE_SSL', true) ? { rejectUnauthorized: false } : false,
-        schema: env('DATABASE_SCHEMA', 'public'),
+        host: env("DATABASE_HOST", "localhost"),
+        port: env.int("DATABASE_PORT", 5432),
+        database: env("DATABASE_NAME", "strapi_db"),
+        user: env("DATABASE_USERNAME", "postgres"),
+        password: env("DATABASE_PASSWORD", "Kunwar@123"),
+        ssl: env.bool("DATABASE_SSL", true)
+          ? { rejectUnauthorized: false }
+          : false, // Fix SSL issue
+        schema: env("DATABASE_SCHEMA", "public"),
       },
       pool: { min: 2, max: 10 },
-    },
-    sqlite: {
-      connection: {
-        filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
-      },
-      useNullAsDefault: true,
     },
   };
 
@@ -29,7 +24,7 @@ module.exports = ({ env }) => {
     connection: {
       client,
       ...connections[client],
-      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+      acquireConnectionTimeout: env.int("DATABASE_CONNECTION_TIMEOUT", 60000),
     },
   };
 };
