@@ -12,14 +12,7 @@ module.exports = ({ env }) => {
         database: env('DATABASE_NAME', 'strapi_db'), // Change to your PostgreSQL database name
         user: env('DATABASE_USERNAME', 'postgres'), // Change to your PostgreSQL username
         password: env('DATABASE_PASSWORD', 'Kunwar@123'), // Change to your PostgreSQL password
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
-        },
+        ssl: env.bool('DATABASE_SSL', true) ? { rejectUnauthorized: false } : false,
         schema: env('DATABASE_SCHEMA', 'public'),
       },
       pool: { min: 2, max: 10 },
